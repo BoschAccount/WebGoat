@@ -2,6 +2,9 @@
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
 
+orbs:
+  snyk: snyk/snyk@2.2.0
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
 jobs:
@@ -28,6 +31,12 @@ jobs:
       - run:
           name: Test
           command: mvn test
+      - snyk/scan:
+          fail-on-issues: false
+          monitor-on-build: true
+          project: WebGoat/main-app
+          severity-threshold: high
+          token-variable: SNYK_TOKEN
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
