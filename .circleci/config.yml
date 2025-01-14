@@ -31,6 +31,14 @@ jobs:
           severity-threshold: high
           token-variable: SNYK_TOKEN
           additional-arguments: --dep-graph
+      - snyk/scan:
+          command: iac test
+          fail-on-issues: false
+          monitor-on-build: true
+          project: WebGoat/infrastructure
+          severity-threshold: high
+          token-variable: SNYK_TOKEN
+          additional-arguments: --report --target-directory=infrastructure/
 
   secret-scan:
     docker:
